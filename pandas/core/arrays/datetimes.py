@@ -686,12 +686,7 @@ class DatetimeArray(dtl.TimelikeOps, dtl.DatelikeOps):
             assert is_datetime64_dtype(other)
             other = type(self)(other)
 
-        if not self._has_same_tz(other):
-            # require tz compat
-            raise TypeError(
-                f"{type(self).__name__} subtraction must have the same "
-                "timezones or no timezones"
-            )
+        self._assert_tzawareness_compat(other)
 
         self_i8 = self.asi8
         other_i8 = other.asi8
@@ -735,11 +730,7 @@ class DatetimeArray(dtl.TimelikeOps, dtl.DatelikeOps):
         if other is NaT:
             return self - NaT
 
-        if not self._has_same_tz(other):
-            # require tz compat
-            raise TypeError(
-                "Timestamp subtraction must have the same timezones or no timezones"
-            )
+        self._assert_tzawareness_compat(other)
 
         i8 = self.asi8
         result = checked_add_with_arr(i8, -other.value, arr_mask=self._isnan)

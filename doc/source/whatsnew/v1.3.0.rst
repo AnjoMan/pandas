@@ -434,6 +434,7 @@ Timezones
 ^^^^^^^^^
 - Bug in different ``tzinfo`` objects representing UTC not being treated as equivalent (:issue:`39216`)
 - Bug in ``dateutil.tz.gettz("UTC")`` not being recognized as equivalent to other UTC-representing tzinfos (:issue:`39276`)
+- Bug in ``Timestamp`` and ``DatetimeIndex`` incorrectly raising a ``TypeError`` when subtracting two times that don't have the same timezone offset (:issue:`31793`)
 -
 
 Numeric

@@ -110,11 +110,10 @@ class TestShift:
         exp = Series(TimedeltaIndex(["NaT"] + ["1 days"] * 4), name="foo")
         tm.assert_series_equal(result, exp)
 
-        # incompat tz
+        # mismatched timezone
         s2 = Series(date_range("2000-01-01 09:00:00", periods=5, tz="CET"), name="foo")
-        msg = "DatetimeArray subtraction must have the same timezones or no timezones"
-        with pytest.raises(TypeError, match=msg):
-            s - s2
+        exp = Series(TimedeltaIndex(["6 hours"] * 5), name="foo")
+        result = s - s2
 
     def test_shift2(self):
         ts = Series(
